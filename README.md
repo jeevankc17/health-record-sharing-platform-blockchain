@@ -25,6 +25,12 @@ platform.
 2. Set your wallet to zkEVM Test Network
 3. Get ETH from https://faucet.polygon.technology/
 4. Use node v16 for (compatibility)
+   Download NVM(Node Version Manager) from
+   https://github.com/coreybutler/nvm-windows/releases
+   ```
+   nvm install 16
+   nvm use 16
+   ```
 
 ## Installation
 
