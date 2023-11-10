@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "engines": {
-    "node": ">=18.17.0"
+    "node": "14.21.3"
   },
   "dependencies": {
     "@artsy/fresnel": "^1.9.0",
