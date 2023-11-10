@@ -8,7 +8,7 @@
     "dev": "next dev",
     "build": "next build"
   },
-  "author": "",
+  "author": "jeevankc17 <62981718+jeevankc17@users.noreply.github.com>",
   "license": "ISC",
   "engines": {
     "node": "16.x"
@@ -19,7 +19,7 @@
     "ganache-cli": "^6.12.2",
     "mocha": "^8.4.0",
     "next": "^8.1.0",
-    "next-routes": "^2.0.0",
+    "next-routes": "^1.4.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-intersection-observer": "^9.5.2",
@@ -33,5 +33,6 @@
   },
   "devDependencies": {
     "electron": "^18.0.3"
-  }
+  },
+  "repository": "https://github.com/jeevankc17/health-record-sharing-platform-blockchain.git"
 }

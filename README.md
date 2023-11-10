@@ -30,8 +30,8 @@ platform.
 
 1. Clone the repository: `git clone https://github.com/your-username/your-repository.git`
 2. Navigate to the project directory: `cd your-repository`
-3. Install dependencies: `npm install`
-4. Start the application: `npm start`
+3. Install dependencies: `yarn install`
+4. Start the application: `yarn dev`
 
 
 ## How to Run Tests
