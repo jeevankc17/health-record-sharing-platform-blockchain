@@ -2,7 +2,7 @@
 Health Record Sharing Platform
 
 ## Table of Contents
-- [Project Title](#project-title)
+  - [Project Title](#project-title)
   - [Table of Contents](#table-of-contents)
   - [Project Description](#project-description)
   - [Project Setup](#project-setup)
@@ -24,7 +24,7 @@ platform.
 1. Download Metamask Extension In Browser
 2. Set your wallet to zkEVM Test Network
 3. Get ETH from https://faucet.polygon.technology/
-4. Use node v14 for (compatibility)
+4. Use node v16 for (compatibility)
 
 ## Installation
 
@@ -36,7 +36,7 @@ platform.
 
 ## How to Run Tests
 ```
-npm run test
+yarn test
 ```
 
 ## Whenever there is a change in Solidity code, use these commands
