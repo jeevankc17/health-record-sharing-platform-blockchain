@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
+import Swal from 'sweetalert2';
+
 
 const options = [
     { key: 'm', text: 'Male', value: 'Male' },
@@ -55,12 +57,20 @@ class RegisterPatient extends Component {
                 ic, name, phone, gender, dob, height, weight, houseaddr, bloodgroup, allergies, medication, emergencyName, emergencyContact
             ).send({ from: accounts[0] });
 
-            alert("Account created successfully!");
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Patient Account Updated Sucessfully',
+              })
             Router.pushRoute('/list');
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("Account already exists");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Patient Account Already Exists',
+              })
         }
 
         this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', height: '', weight: '', houseaddr: '', bloodgroup: '', allergies: '', medication: '', emergencyName: '', emergencyContact: ''});

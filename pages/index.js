@@ -58,7 +58,7 @@ const HomepageHeading = ({ mobile }) => (
           >
             <Header
               as="h1"
-              content="Health Record Sharing Platform"
+              content="Decentralized Health Record Sharing Platform"
               inverted
               style={{
                 fontSize: mobile ? "2em" : "4em",
@@ -526,37 +526,76 @@ const HomepageLayout = () => (
       <Container textAlign="center">
         <Grid divided inverted stackable>
           <Grid.Column width={3}>
-            <Header inverted as="h4" content="Group 1" />
+            <Header inverted as="h4" content="Patient Resources" />
             <List link inverted>
-              <List.Item as="a">Link One</List.Item>
-              <List.Item as="a">Link Two</List.Item>
-              <List.Item as="a">Link Three</List.Item>
-              <List.Item as="a">Link Four</List.Item>
+              <List.Item as="a" href="#">
+                Medical Records
+              </List.Item>
+              <List.Item as="a" href="#">
+                Appointments
+              </List.Item>
+              <List.Item as="a" href="#">
+                Prescriptions
+              </List.Item>
+              <List.Item as="a" href="#">
+                Health Blog
+              </List.Item>
+              {/* Add the link below each list item without a specific label */}
+              <List.Item as="a" href="#">
+                {/* You can leave this empty or add a specific icon or symbol */}
+              </List.Item>
             </List>
           </Grid.Column>
+
           <Grid.Column width={3}>
-            <Header inverted as="h4" content="Group 2" />
+            <Header inverted as="h4" content="Doctor Services" />
             <List link inverted>
-              <List.Item as="a">Link One</List.Item>
-              <List.Item as="a">Link Two</List.Item>
-              <List.Item as="a">Link Three</List.Item>
-              <List.Item as="a">Link Four</List.Item>
+              <List.Item as="a" href="#">
+                Appointments
+              </List.Item>
+              <List.Item as="a" href="#">
+                Patient Records
+              </List.Item>
+              <List.Item as="a" href="#">
+                Prescription Management
+              </List.Item>
+              <List.Item as="a" href="#">
+                Health Blog
+              </List.Item>
+              {/* Add the link below each list item without a specific label */}
+              <List.Item as="a" href="#">
+                {/* You can leave this empty or add a specific icon or symbol */}
+              </List.Item>
             </List>
           </Grid.Column>
+
           <Grid.Column width={3}>
-            <Header inverted as="h4" content="Group 3" />
+            <Header inverted as="h4" content="Health Blog" />
             <List link inverted>
-              <List.Item as="a">Link One</List.Item>
-              <List.Item as="a">Link Two</List.Item>
-              <List.Item as="a">Link Three</List.Item>
-              <List.Item as="a">Link Four</List.Item>
+              <List.Item as="a" href="#">
+                Latest Articles
+              </List.Item>
+              <List.Item as="a" href="#">
+                Health Tips
+              </List.Item>
+              <List.Item as="a" href="#">
+                Medical News
+              </List.Item>
+              <List.Item as="a" href="#">
+                Wellness Advice
+              </List.Item>
+              {/* Add the link below each list item without a specific label */}
+              <List.Item as="a" href="#">
+                {/* You can leave this empty or add a specific icon or symbol */}
+              </List.Item>
             </List>
           </Grid.Column>
+
           <Grid.Column width={7}>
-            <Header inverted as="h4" content="Footer Header" />
+            <Header inverted as="h4" content="Get in Touch" />
             <p>
-              Extra space for a call to action inside the footer that could help
-              re-engage users.
+              Connect with us for personalized healthcare services and
+              information.
             </p>
           </Grid.Column>
         </Grid>

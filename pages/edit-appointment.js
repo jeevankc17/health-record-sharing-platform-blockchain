@@ -3,6 +3,8 @@ import { Divider, Form, Input, Button, Segment, Message, Select } from 'semantic
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+import Swal from 'sweetalert2';
+
 
 const statusOptions = [
     { key: 'p', text: 'Pending', value: 'Pending' },
@@ -37,11 +39,19 @@ class EditAppointment extends Component {
                 patientaddr, date, time, diagnosis, prescription, description, status
             ).send({ from: accounts[0] });
 
-            alert("Appointment updated successfully!");
+            Swal.fire({
+                icon: 'correct',
+                title: 'Done',
+                text: 'Info Got Updated',
+              })
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("An error has occured");
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error Occured',
+              })
         }
 
         this.setState({ loading: false, patientaddr: '', date: '', time: '', prescription: '', description: '', diagnosis: '', status: ''});

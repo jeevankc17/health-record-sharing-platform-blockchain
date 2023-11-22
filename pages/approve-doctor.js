@@ -1,54 +1,97 @@
 import React, { Component } from 'react';
-import { Segment, Input, Header, Message, Button, Form } from 'semantic-ui-react';
+import { Segment, Input, Header, Message, Button, Form, Icon } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+import Swal from 'sweetalert2';
+
 
 class ApproveDoctor extends Component {
     state = {
         doctorAddr: '',
-        loading: '',
-        errorMessage: '' 
+        loading: false,
+        errorMessage: '',
+        showAddress: false
     };
 
-    onSubmit = async event => {
-        event.preventDefault();
+    toggleAddressVisibility = () => {
+        this.setState((prevState) => ({
+            showAddress: !prevState.showAddress
+        }));
+    };
 
-        this.setState({loading: true, errorMessage: ''});
+    onApprove = async () => {
+        this.setState({ loading: true, errorMessage: '' });
 
         try {
+            const { doctorAddr } = this.state;
+
+            // Validate the Ethereum address
+            if (!web3.utils.isAddress(doctorAddr)) {
+                throw new Error('Invalid Ethereum address');
+            }
+
             const accounts = await web3.eth.getAccounts();
 
-            await record.methods.givePermission(this.state.doctorAddr).send({ from: accounts[0] });
+            // Update the state with the new approved doctor
+            await record.methods.givePermission(doctorAddr).send({ from: accounts[0] });
 
-            alert("Permission Granted Successfully!");
-        }
-        catch (err) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Permission Granted',
+              })
+        } catch (err) {
             this.setState({ errorMessage: err.message });
         }
 
-        this.setState({ loading: false, doctorAddr: ''});
-    }
+        this.setState({ loading: false });
+    };
 
     render() {
+        const { showAddress } = this.state;
+
         return (
             <Layout>
-                <Segment>
+                <Segment style={{ maxWidth: '500px', margin: 'auto' }}>
                     <Header
-                            as='h2'
-                            content='Allow Access'
-                            subheader='Give doctor or patient permission to view records'
-                    ></Header>
-                    <Input 
-                        fluid
-                        placeholder = "Doctor's Ethereum Address"
-                        value= {this.state.doctorAddr}
-                        onChange= {event => 
-                            this.setState({ doctorAddr: event.target.value })}  
-                    /><br/>
-                    <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
-                        <Message error header="Oops!" content={this.state.errorMessage}/>
-                        <Button primary loading={this.state.loading}>Approve</Button>
+                        as='h2'
+                        content='Allow Access'
+                        subheader='Give doctor or patient permission to view records'
+                    />
+                    <Form error={!!this.state.errorMessage}>
+                        <Form.Field>
+                            <Input
+                                fluid
+                                placeholder="Doctor's Ethereum Address"
+                                type={showAddress ? 'text' : 'password'}
+                                iconPosition='left'
+                                icon='address card outline'
+                                value={this.state.doctorAddr}
+                                onChange={(event) => this.setState({ doctorAddr: event.target.value })}
+                            />
+                        </Form.Field>
+                        <Message error header="Oops!" content={this.state.errorMessage} />
+                        <Button
+                            primary
+                            fluid
+                            loading={this.state.loading}
+                            onClick={this.toggleAddressVisibility}
+                            icon
+                            labelPosition='right'
+                        >
+                            {showAddress ? 'Hide' : 'Show'}
+                            <Icon name={showAddress ? 'eye slash' : 'eye'} />
+                        </Button>
+                        <Button
+                            primary
+                            fluid
+                            loading={this.state.loading}
+                            style={{ marginTop: '10px' }}
+                            onClick={this.onApprove}
+                        >
+                            Approve
+                        </Button>
                     </Form>
                 </Segment>
             </Layout>

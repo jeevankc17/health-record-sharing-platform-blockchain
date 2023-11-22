@@ -6,17 +6,16 @@ let web3;
 if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
   // Use MetaMask provider
   web3 = new Web3(window.ethereum);
-  
+
   // Request account access if needed
   (async () => {
     try {
       // Requesting account access
-      await window.ethereum.enable();
+      await window.ethereum.request({ method: 'eth_requestAccounts' });
 
-      // Get the connected accounts
-      const accounts = await web3.eth.getAccounts();
-      if (accounts.length > 0) {
-        const connectedAccount = accounts[0];
+      // Use the current account directly without calling eth_getAccounts
+      const connectedAccount = window.ethereum.selectedAddress;
+      if (connectedAccount) {
         console.log('Connected MetaMask account:', connectedAccount);
       } else {
         console.log('No MetaMask account connected');
@@ -26,8 +25,8 @@ if (typeof window !== 'undefined' && typeof window.ethereum !== 'undefined') {
     }
   })();
 } else {
-  // Fallback to a different provider, e.g., local development or Infura
-  const provider = new Web3.providers.HttpProvider('https://polygonzkevm-mainnet.g.alchemy.com/v2/JOmuhjrFpyrKKBXQd-CtHr2Lwv8OaC-q'); // Update with your own provider
+  // Fallback to a different provider, e.g., local development or Alchemy
+  const provider = new Web3.providers.HttpProvider('https://eth-sepolia.g.alchemy.com/v2/NjlALbrl8OyBHgN70kJL512S7v56qYpu'); // Update with your own provider
   web3 = new Web3(provider);
 }
 

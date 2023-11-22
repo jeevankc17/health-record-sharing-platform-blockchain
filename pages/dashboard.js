@@ -71,13 +71,14 @@ export default class Dashboard extends PureComponent {
         });
     };
 
-    static async getInitialProps() {  
-        const accounts = await web3.eth.getAccounts();
-        const allPatients = await record.methods.getPatients().call();
-        const allDoctors = await record.methods.getDoctors().call();
-        const allAppointments = await record.methods.getAppointments().call();
-
-        var patientCount = await record.methods.getPatientCount().call();
+    static async getInitialProps({ req, res }) {
+      try {
+          const accounts = await web3.eth.getAccounts();
+          const allPatients = await record.methods.getPatients().call();
+          const allDoctors = await record.methods.getDoctors().call();
+          const allAppointments = await record.methods.getAppointments().call();
+  
+          var patientCount = await record.methods.getPatientCount().call();
         var doctorCount = await record.methods.getDoctorCount().call();
         var appointmentCount = await record.methods.getAppointmentCount().call();
         var permissionGrantedCount = await record.methods.getPermissionGrantedCount().call();
@@ -261,9 +262,33 @@ export default class Dashboard extends PureComponent {
               Count: Object.entries(apptdict)[11][1],
             },
         ]
-
-        return { patientCount, doctorCount, appointmentCount, permissionGrantedCount, data, pieData, patientMonthOverMonthChange, appointmentMonthOverMonthChange, patGrowthColor, apptGrowthColor };
-    }
+  
+          return {
+              patientCount,
+              doctorCount,
+              appointmentCount,
+              permissionGrantedCount,
+              data,
+              pieData,
+              patientMonthOverMonthChange,
+              appointmentMonthOverMonthChange,
+              patGrowthColor,
+              apptGrowthColor,
+          };
+      } catch (err) {
+          // Check if we are on the server side
+          if (typeof window === 'undefined' && req && res) {
+              // Redirect to the list page on the server side
+              res.writeHead(302, { Location: '/list' });
+              res.end();
+              return {};
+          } else {
+              // Redirect to the list page on the client side
+              Router.pushRoute('/list');
+          }
+      }
+  }
+  
 
     render() {
         return (
@@ -370,7 +395,7 @@ export default class Dashboard extends PureComponent {
                 </Card.Group>
 
                 <Segment padded>
-                    <h3 style={{textAlign: "center"}}>Number of Patients vs Doctors in 2022</h3>
+                    <h3 style={{textAlign: "center"}}>Number of Patients vs Doctors</h3>
                     <ResponsiveContainer width="100%" aspect={3}>
                         <AreaChart 
                             width={500}
@@ -404,7 +429,7 @@ export default class Dashboard extends PureComponent {
                 </Segment>
                 
                 <Segment padded>
-                  <h3 style={{textAlign: "center"}}>Number of Appointments in 2022</h3>
+                  <h3 style={{textAlign: "center"}}>Number of Appointments</h3>
                   <ResponsiveContainer width="100%" aspect={3}>
                       <LineChart
                       width={500}

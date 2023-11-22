@@ -3,6 +3,8 @@ import { Divider, Form, Input, Button, Segment, Message, Select} from 'semantic-
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
+import Swal from 'sweetalert2';
+
 
 const genderOptions = [
     { key: 'm', text: 'Male', value: 'Male' },
@@ -49,11 +51,19 @@ class EditDoctor extends Component {
                 ic, name, phone, gender, dob, qualification, major
             ).send({ from: accounts[0] });
 
-            alert("Doctor account created successfully!");
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Doctor Account Updated Sucessfully',
+              })
         }
         catch (err) {
             this.setState({ errorMessage: err.message });
-            alert("This Doctor account already exists");
+            Swal.fire({
+                icon: 'success',
+                title: 'Success',
+                text: 'Doctor Already Exists',
+              })
         }
 
         this.setState({ loading: false, ic: '', name: '', phone: '', gender: '', dob: '', qualification: '', major: ''});

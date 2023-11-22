@@ -8,6 +8,7 @@ Health Record Sharing Platform
   - [Project Setup](#project-setup)
   - [Installation](#installation)
   - [How to Run Tests](#how-to-run-tests)
+  - [How to build project](#how-to-build-project)
   - [Whenever there is a change in Solidity code, use these commands](#whenever-there-is-a-change-in-solidity-code-use-these-commands)
   - [Note: Use Remix IDE to deploy the contract incase of any compatible issue](#note-use-remix-ide-to-deploy-the-contract-incase-of-any-compatible-issue)
   - [Usage](#usage)
@@ -36,7 +37,13 @@ platform.
 
 ## How to Run Tests
 ```
-npm run test
+yarn test
+```
+
+## How to build project
+```
+yarn build
+
 ```
 
 ## Whenever there is a change in Solidity code, use these commands

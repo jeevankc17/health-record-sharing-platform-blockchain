@@ -4,18 +4,19 @@ import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
+import Swal from 'sweetalert2';
+
 
 class DoctorDetails extends Component {
 
-    static async getInitialProps(props) {
-        const addr = props.query.address;
+    static async getInitialProps({ query, req, res }) {
+        const addr = query.address;
         const accounts = await web3.eth.getAccounts();
         var doctor, profilePic;
-
+    
         try {
             doctor = await record.methods.searchDoctor(addr).call({from: accounts[0]});
             profilePic = (doctor[3] == 'Male') ? 'https://cdn-icons-png.flaticon.com/128/387/387561.png' : 'https://cdn-icons-png.flaticon.com/128/387/387569.png';
-            
             return {
                 ic: doctor[0],
                 name: doctor[1],
@@ -26,10 +27,24 @@ class DoctorDetails extends Component {
                 major: doctor[6],
                 profilePic,
             };
-        }
-        catch (err) {
-            alert("You have not created an account");
-            Router.pushRoute('/list');
+        } catch (err) {
+            // Check if we are on the server side
+            if (typeof window === 'undefined' && req && res) {
+                // Redirect to the list page on the server side
+                res.writeHead(302, { Location: '/list' });
+                res.end();
+                return {};
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Permission Denied',
+                    text: 'You do not have permission to view this account.',
+                  }).then(() => {
+                    // Redirect to the list page on the client side
+                Router.pushRoute('/list');
+                    
+                  });
+            }
         }
     }
 

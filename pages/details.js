@@ -3,24 +3,28 @@ import { Grid, Segment, Header, Image  } from 'semantic-ui-react';
 import Layout from '../components/Layout';
 import record from '../ethereum/record';
 import web3 from '../ethereum/web3';
-import { Router } from '../routes';
+//import { Router } from '../routes';
+import Router from 'next/router';
+import Swal from 'sweetalert2';
+
+import ErrorBoundary from '../components/ErrorBoundry';
 
 class RecordDetails extends Component {
 
-    static async getInitialProps(props) {
-        const addr = props.query.address;
+    static async getInitialProps({ query, req, res }) {
+        const addr = query.address;
         const accounts = await web3.eth.getAccounts();
         var records, records2, appointment, profilePic;
-
+    
         try {
-            records = await record.methods.searchPatientDemographic(addr).call({from: accounts[0]});
-            records2 = await record.methods.searchPatientMedical(addr).call({from: accounts[0]});
-            appointment = await record.methods.searchAppointment(addr).call({from: accounts[0]});  
-
-            if(appointment[0].includes("0x00000000000")) appointment[0] = '';
-
-            profilePic = (records[3] == 'Male') ? 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png' : 'https://cdn-icons-png.flaticon.com/512/3135/3135789.png';
-            
+            records = await record.methods.searchPatientDemographic(addr).call({ from: accounts[0] });
+            records2 = await record.methods.searchPatientMedical(addr).call({ from: accounts[0] });
+            appointment = await record.methods.searchAppointment(addr).call({ from: accounts[0] });
+    
+            if (appointment[0].includes("0x00000000000")) appointment[0] = '';
+    
+            profilePic = records[3] === 'Male' ? 'https://cdn-icons-png.flaticon.com/128/3135/3135715.png' : 'https://cdn-icons-png.flaticon.com/512/3135/3135789.png';
+    
             return {
                 ic: records[0],
                 name: records[1],
@@ -29,14 +33,14 @@ class RecordDetails extends Component {
                 dob: records[4],
                 height: records[5],
                 weight: records[6],
-                
+    
                 houseaddr: records2[0],
                 bloodgroup: records2[1],
                 allergies: records2[2],
                 medication: records2[3],
                 emergencyName: records2[4],
                 emergencyContact: records2[5],
-
+    
                 doctoraddr: appointment[0],
                 doctorname: appointment[1],
                 date: appointment[2],
@@ -45,17 +49,32 @@ class RecordDetails extends Component {
                 prescription: appointment[5],
                 description: appointment[6],
                 status: appointment[7],
-                profilePic
+                profilePic,
             };
-        }
-        catch (err) {
-            alert("You don't have permission to view this account");
-            Router.pushRoute('/list');
+        } catch (err) {
+            // Check if we are on the server side
+            if (typeof window === 'undefined' && req && res) {
+                // Redirect to the list page on the server side
+                res.writeHead(302, { Location: '/list' });
+                res.end();
+                return {};
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Permission Denied',
+                    text: 'You do not have permission to view this account.',
+                  }).then(() => {
+                    // Redirect to the list page on the client side
+                Router.pushRoute('/list');
+                    
+                  });
+            }
         }
     }
-
+    
     renderDisplay(){
         return (
+            <ErrorBoundary>
             <Grid columns={2} stackable className="fill-content">
               <Grid.Row>
                 <Grid.Column width={1} />
@@ -207,6 +226,7 @@ class RecordDetails extends Component {
                 <Grid.Column width={1} />
               </Grid.Row>
             </Grid>
+            </ErrorBoundary>
           );
     }
 
