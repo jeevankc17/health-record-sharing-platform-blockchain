@@ -54,14 +54,22 @@ const HomepageHeading = ({ mobile }) => (
           </Grid.Column>
           <Grid.Column
             width={8}
-            style={{ margin: "0em 0em 0em", padding: "0em 2em" }}
+            style={{ margin: "0em 0em 0em", padding: "0em 0.5em" }}
           >
             <Header
               as="h1"
-              content="Decentralized Health Record Sharing Platform"
+              content={
+                <>
+                  Decentralized <br />
+                  Transparent <br />
+                  Tamper-Proof <br />
+                  Medical Records Platform
+                </>
+              }
+              
               inverted
               style={{
-                fontSize: mobile ? "2em" : "4em",
+                fontSize: mobile ? "2em" : "2.5em",
                 fontWeight: "normal",
                 marginBottom: 0,
                 marginTop: mobile ? "1.5em" : "3em",
