@@ -7,7 +7,6 @@ import web3 from '../ethereum/web3';
 import Router from 'next/router';
 import Swal from 'sweetalert2';
 
-import ErrorBoundary from '../components/ErrorBoundry';
 
 class RecordDetails extends Component {
 
@@ -74,7 +73,6 @@ class RecordDetails extends Component {
     
     renderDisplay(){
         return (
-            <ErrorBoundary>
             <Grid columns={2} stackable className="fill-content">
               <Grid.Row>
                 <Grid.Column width={1} />
@@ -226,7 +224,6 @@ class RecordDetails extends Component {
                 <Grid.Column width={1} />
               </Grid.Row>
             </Grid>
-            </ErrorBoundary>
           );
     }
 

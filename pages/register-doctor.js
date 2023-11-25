@@ -13,6 +13,8 @@ import record from "../ethereum/record";
 import web3 from "../ethereum/web3";
 import Swal from "sweetalert2";
 import { Checkbox } from "semantic-ui-react";
+import { Icon } from "semantic-ui-react";
+
 
 const genderOptions = [
   { key: "m", text: "Male", value: "Male" },
@@ -40,6 +42,9 @@ class RegisterDoctor extends Component {
     showIc: false, // New state to control visibility
     loading: false,
     errorMessage: "",
+    search: "",
+    showFullAddresses: false,
+    showPassword: false,
   };
 
   handleGender = (e, { value }) => this.setState({ gender: value });
@@ -106,15 +111,22 @@ class RegisterDoctor extends Component {
               <Form.Field>
                 <label>IC</label>
                 <Input
-                  placeholder="Eg. 001234010234"
-                  value={this.state.ic}
-                  onChange={(event) =>
-                    this.setState({ ic: event.target.value })
-                  }
-                  type={this.state.showIc ? "text" : "password"}
-                  action
-                  className="eye-icon-input"
-                ></Input>
+                fluid
+                icon={{
+                  name: this.state.showPassword ? "eye slash" : "eye",
+                  link: true,
+                  onClick: () =>
+                    this.setState((prevState) => ({
+                      showPassword: !prevState.showPassword,
+                    })),
+                }}
+                type={this.state.showPassword ? "text" : "password"}
+                placeholder="Eg. 001234010234"
+                value={this.state.ic}
+                onChange={(event) =>
+                  this.setState({ ic: event.target.value })
+                }
+              />
               </Form.Field>
               <Form.Field>
                 <label>Full Name</label>
