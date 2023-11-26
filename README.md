@@ -2,7 +2,7 @@
 Health Record Sharing Platform
 
 ## Table of Contents
-  - [Project Title](#project-title)
+- [Project Title](#project-title)
   - [Table of Contents](#table-of-contents)
   - [Project Description](#project-description)
   - [Project Setup](#project-setup)
@@ -44,15 +44,13 @@ platform.
 ## How to Run Tests
 ```
 yarn test
-<<<<<<< HEAD
+
 ```
 
 ## How to build project
 ```
 yarn build
 
-=======
->>>>>>> 17e2d52166af02ebb7fbe32822f9a0fa1fdbfece
 ```
 
 ## Whenever there is a change in Solidity code, use these commands
